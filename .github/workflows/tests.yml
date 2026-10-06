@@ -11,7 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  test:
+  run_ui_tests:
+    name: "🧪 Run Playwright POM Tests & Generate Allure"
     runs-on: ubuntu-latest
 
     steps:
