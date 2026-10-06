@@ -24,7 +24,7 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Java (потрібно для Allure CLI)
+      - name: Install Java (required for Allure CLI)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -47,24 +47,24 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: Run Pytest
+        id: run_tests
         run: |
           pytest
         continue-on-error: true
 
       - name: Get Allure history from gh-pages
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Copy history to allure-results
         if: always()
         run: |
-          mkdir -p allure-results
-          if [ -d "gh-pages/history" ]; then
-            cp -r gh-pages/history allure-results/
+          if git ls-remote --heads origin gh-pages | grep gh-pages; then
+            git fetch origin gh-pages:gh-pages
+            git checkout gh-pages
+            mkdir -p allure-results
+            if [ -d "history" ]; then
+              cp -r history allure-results/
+            fi
+            git checkout -
+          else
+            echo "Branch gh-pages does not exist yet. Initial run."
           fi
 
       - name: Generate Allure Report
@@ -79,3 +79,16 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
           publish_branch: gh-pages
+
+      - name: Generate Job Summary
+        if: always()
+        run: |
+          echo "## 📊 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** \`ubuntu-latest\` (Python 3.11, Chromium)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger Event:** \`${{ github.eventName }}\` on branch \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Author:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Execution Status:** ${{ steps.run_tests.outcome == 'success' && '✅ **Passed**' \vert{}\vert{} '❌ **Failed**' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Reporting" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 **Allure Report:** [View Interactive Report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/)" >> $GITHUB_STEP_SUMMARY
