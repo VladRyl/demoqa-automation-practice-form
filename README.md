@@ -172,4 +172,4 @@ black .
 
 ## 👤 Author
 
-- **Vladislav** - [@VladRyl](https://github.com/VladRyl)
+- **Vlad** - [@VladRyl](https://github.com/VladRyl)
