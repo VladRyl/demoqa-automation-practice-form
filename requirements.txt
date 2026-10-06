@@ -1,0 +1,7 @@
+pytest
+pytest-playwright
+playwright
+pytest-order
+pytest-dependency
+pytest-xdist
+allure-pytest

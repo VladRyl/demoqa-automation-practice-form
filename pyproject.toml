@@ -1,0 +1,5 @@
+[tool.pyrefly]
+python_interpreter = ".venv/bin/python"
+
+[tool.pytest.ini_options]
+addopts = "-n auto --dist=loadfile --alluredir=allure-results --clean-alluredir"
