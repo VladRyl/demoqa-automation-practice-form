@@ -88,7 +88,11 @@ jobs:
           echo "- **Environment:** \`ubuntu-latest\` (Python 3.11, Chromium)" >> $GITHUB_STEP_SUMMARY
           echo "- **Trigger Event:** \`${{ github.eventName }}\` on branch \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Author:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Execution Status:** ${{ steps.run_tests.outcome == 'success' && '✅ **Passed**' \vert{}\vert{} '❌ **Failed**' }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.run_tests.outcome }}" = "success" ]; then
+            echo "- **Execution Status:** ✅ **Passed**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Execution Status:** ❌ **Failed**" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 Reporting" >> $GITHUB_STEP_SUMMARY
           echo "🌐 **Allure Report:** [View Interactive Report](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/)" >> $GITHUB_STEP_SUMMARY
