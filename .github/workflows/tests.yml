@@ -45,13 +45,12 @@ jobs:
 
       - name: Install Playwright Browsers
         run: |
-          npx playwright install --with-deps chromium
+          playwright install --with-deps chromium
 
       - name: Run Pytest
         id: run_tests
         run: |
           pytest
-        continue-on-error: true
 
       - name: Get Allure history from gh-pages
         if: always()
