@@ -343,7 +343,7 @@ class TestPracticeForm:
         practice_form_page.select_city("Jaipur")
 
     @pytest.mark.dependency(depends=["open_form"])
-    def test_select_obly_state_cascade(self, practice_form_page):
+    def test_select_only_state_cascade(self, practice_form_page):
         practice_form_page.open()
         practice_form_page.select_state("NCR")
         practice_form_page.fill_first_name("User")
