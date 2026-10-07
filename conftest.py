@@ -49,14 +49,12 @@ def pytest_runtest_makereport(item, call):
             try:
                 screenshot = page.screenshot(full_page=True)
 
-                # 1. Прикріплення до звіту Allure
                 allure.attach(
                     screenshot,
                     name=f"failure_{item.name}",
                     attachment_type=allure.attachment_type.PNG,
                 )
 
-                # 2. Збереження окремим файлом у папку screenshots/
                 SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
                 safe_name = "".join(
                     c if c.isalnum() or c in "._-[]" else "_" for c in item.name
