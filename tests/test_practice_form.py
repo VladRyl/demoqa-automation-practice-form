@@ -282,6 +282,13 @@ class TestPracticeForm:
         expect(practice_form_page._upload_picture_input).to_have_value(
             f"C:\\fakepath\\{expected_filename}"
         )
+        practice_form_page.fill_first_name("User")
+        practice_form_page.fill_last_name("Test")
+        practice_form_page.select_gender(Gender.MALE)
+        practice_form_page.fill_mobile_number("1234567890")
+        practice_form_page.submit()
+        expect(practice_form_page._modal_content).to_be_visible()
+        expect(practice_form_page._modal_table).to_contain_text(expected_filename)
 
     @pytest.mark.dependency(depends=["open_form"])
     @pytest.mark.parametrize("filename", INVALID_FILE_NAMES)
