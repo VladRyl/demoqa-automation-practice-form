@@ -9,6 +9,7 @@
 
 A scalable, production-grade test automation framework designed for the [DemoQA Student Registration Practice Form](https://demoqa.com/automation-practice-form). Built with **Python**, **Playwright (Sync API)**, **Pytest**, **Page Object Model (POM)** design pattern, and **Allure Report** with CI/CD integration via **GitHub Actions**.
 
+**Latest Allure report:** [View the report on GitHub Pages](https://vladryl.github.io/demoqa-automation-practice-form/)
 ---
 
 ## 🌟 Key Features
